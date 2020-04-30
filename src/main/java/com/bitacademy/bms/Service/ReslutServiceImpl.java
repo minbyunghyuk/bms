@@ -13,7 +13,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ReslutServiceImpl implements ResultService  {
 
-    @Autowired
+
     ResultRepository resultRepository;
 
     @Override
@@ -24,5 +24,12 @@ public class ReslutServiceImpl implements ResultService  {
     @Override
     public Optional<ResultEntity> findById(long no) {
         return resultRepository.findById(no);
+    }
+
+
+    @Override
+    public List<ResultEntity> findByDateContains(String date) {
+
+        return resultRepository.findByDateContains(date);
     }
 }

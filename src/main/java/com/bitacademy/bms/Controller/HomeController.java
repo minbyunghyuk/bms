@@ -15,7 +15,7 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
-    ResultService resultService;
+
 
     @GetMapping(value="/list")
     public String index() {

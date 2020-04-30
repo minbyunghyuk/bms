@@ -10,4 +10,6 @@ public interface ResultService {
     public List<ResultEntity> getList();
 
     public Optional<ResultEntity> findById (long no);
+
+    List<ResultEntity> findByDateContains(String date);
 }

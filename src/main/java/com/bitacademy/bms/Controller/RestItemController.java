@@ -17,18 +17,24 @@ public class RestItemController {
     private ResultService service;
 
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/getid", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public List<Optional<ResultEntity>> getNo() {
+    public Optional<ResultEntity> getNo() {
 
-        List<Optional<ResultEntity>> itemEntityList = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            Optional<ResultEntity> item = service.findById(i);
-            itemEntityList.add(item);
-        }
-        return itemEntityList;
+        Optional<ResultEntity> resultEntity= service.findById(1);
+
+        return resultEntity;
     }
 
+
+    @RequestMapping(value = "/getyear", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List <ResultEntity> getyear() {
+        List<ResultEntity> resultEntityList = service.findByDateContains("2011-01");
+
+        return  resultEntityList;
+
+    }
 
 
 }
