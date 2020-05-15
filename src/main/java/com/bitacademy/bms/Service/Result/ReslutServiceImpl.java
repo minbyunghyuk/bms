@@ -1,17 +1,17 @@
-package com.bitacademy.bms.Service;
+package com.bitacademy.bms.Service.Result;
 
 import com.bitacademy.bms.Repository.ResultRepository;
 import com.bitacademy.bms.model.ResultEntity;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ReslutServiceImpl implements ResultService  {
+public class ReslutServiceImpl implements ResultService {
 
 
     ResultRepository resultRepository;
@@ -26,10 +26,10 @@ public class ReslutServiceImpl implements ResultService  {
         return resultRepository.findById(no);
     }
 
-
     @Override
-    public List<ResultEntity> findByDateContains(String date) {
-
-        return resultRepository.findByDateContains(date);
+    public List<ResultEntity> findByDateBetween(Date start, Date end) {
+        return resultRepository.findByDateBetween(start,end);
     }
+
+
 }

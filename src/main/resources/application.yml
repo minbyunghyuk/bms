@@ -8,9 +8,16 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  thymeleaf:
+    prefix: classpath:static/
+    suffix: .html
+    cache: false
+
+
+
 
   datasource:
-    url: jdbc:mariadb://localhost:3306/crawling
+    url: jdbc:mariadb://localhost:3306/bms_test
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: 123456

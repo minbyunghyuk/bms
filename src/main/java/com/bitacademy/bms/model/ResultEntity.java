@@ -4,6 +4,7 @@ package com.bitacademy.bms.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -15,7 +16,7 @@ public class ResultEntity {
     private Long Id;
 
     @Column(name="date")
-    private String date;
+    private Date date;
 
     @Column(name="potato_price")
     private String potato_price;
