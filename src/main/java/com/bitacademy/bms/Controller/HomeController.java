@@ -1,102 +1,153 @@
 package com.bitacademy.bms.Controller;
 
-import com.bitacademy.bms.Service.Result.ResultService;
+
 import com.bitacademy.bms.Service.Stock.StockSerivce;
-import com.bitacademy.bms.model.ResultEntity;
+import com.bitacademy.bms.Service.corr.corrService;
+import com.bitacademy.bms.model.CompletionEntity;
+import com.bitacademy.bms.model.SampleVO;
 import com.bitacademy.bms.model.StockEntity;
+import com.bitacademy.bms.model.corrEntity;
+import com.sun.org.apache.xpath.internal.axes.ReverseAxesWalker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 
 @Controller
 @AllArgsConstructor
 public class HomeController {
     private StockSerivce stockSerivce;
-    private ResultService Resultservice;
+    private corrService corrService;
+
+    @GetMapping(value = "/d3")
+    public String d3test(Model model) {
 
 
-    @GetMapping(value = "/index")
-    public String index4(Model model) {
-        //사용자가 클릭한거 한개
-        String todaydate = "2020-04-23";
-        java.sql.Date searchdate = java.sql.Date.valueOf(todaydate);
-        String name ="아시아종묘";
-        List<StockEntity> Setonelist = stockSerivce.findByDate(searchdate);
-        for (StockEntity item : Setonelist) {
-            if (name.equals(item.getCom_name())){
-                model.addAttribute("item",item);
-            }
-        }
-        //유사주식리스트
-        List<StockEntity> Similar_list  = new ArrayList<>();
-        List<StockEntity> Similar_All_list  = stockSerivce.findByDate(searchdate);
-        for (StockEntity Sm_item : Similar_All_list) {
-            if (Sm_item.getCom_name().equals("경농")){
-                Similar_list.add(Sm_item);
-            }
-            if (Sm_item.getCom_name().equals("조비")){
-                Similar_list.add(Sm_item);
-            }
-            if (Sm_item.getCom_name().equals("효성오앤비")){
-                Similar_list.add(Sm_item);
-            }
 
-            model.addAttribute("list", Similar_list);
+        return "d3test";
+    }
+    @GetMapping(value = "/d32")
+    public String d3test2(Model model) {
 
-        }
+
+
+        return "d3test2";
+    }
+    @GetMapping(value = "/")
+    public String index(Model model) {
+        List<CompletionEntity> completionEntityList = stockSerivce.selectTotals();
+
+        model.addAttribute("list", completionEntityList);
         return "index";
     }
-    @GetMapping(value = "/index1")
-    public String index1(Model model) {
-        //사용자가 클릭한거 한개
-        String todaydate = "2020-04-23";
-        java.sql.Date searchdate = java.sql.Date.valueOf(todaydate);
-        String name ="아시아종묘";
-        List<StockEntity> Setonelist = stockSerivce.findByDate(searchdate);
-        for (StockEntity item : Setonelist) {
-            if (name.equals(item.getCom_name())){
-                model.addAttribute("item",item);
-            }
-        }
 
-        String todaydate1 = "2020-04-24";
-        java.sql.Date searchdate1 = java.sql.Date.valueOf(todaydate1);
-        String name1 ="아시아종묘";
-        List<StockEntity> Setonelist1 = stockSerivce.findByDate(searchdate1);
-        for (StockEntity item : Setonelist1) {
-            if (name1.equals(item.getCom_name())){
-                model.addAttribute("item1",item);
-            }
-        }
-        //유사주식리스트
-        List<StockEntity> Similar_list  = new ArrayList<>();
-        List<StockEntity> Similar_All_list  = stockSerivce.findByDate(searchdate);
-        for (StockEntity Sm_item : Similar_All_list) {
-            if (Sm_item.getCom_name().equals("경농")){
-                Similar_list.add(Sm_item);
-            }
-            if (Sm_item.getCom_name().equals("조비")){
-                Similar_list.add(Sm_item);
-            }
-            if (Sm_item.getCom_name().equals("효성오앤비")){
-                Similar_list.add(Sm_item);
-            }
+    @GetMapping(value = "/view")
+    public String view(Model model) {
+        //DateTIme 은 임시로
+        List<CompletionEntity> completionEntityList = stockSerivce.selectTotals();
 
-            model.addAttribute("list", Similar_list);
+        model.addAttribute("list", completionEntityList);
 
-        }
-        return "index1";
+        return "view";
     }
 
-    @GetMapping(value = "/index2")
-    public String index2(Model model) {
-        //사용자가 클릭한거 한개
+    @GetMapping(value = "/get")
+    public String get(@RequestParam(value = "name",required = false, defaultValue = "경농") String name, Model model) {
 
-        return "index2";
+        //사용자가 showviewgraph를 누르고들어오면 경농으로 일단 고정시켜놈
+        System.out.println(name);
+        List<CompletionEntity> compare_list = new ArrayList<>();
+        List<corrEntity> corrEntityList = corrService.findAllByName(name);
+        List<CompletionEntity> completionEntityList = stockSerivce.selectTotals();
+
+        for (CompletionEntity completionEntity : completionEntityList) {
+            if (completionEntity.getCom_name().equals(name)) {
+                model.addAttribute("model", completionEntity);
+            }
+        }
+        for (corrEntity corr : corrEntityList) {
+            if (corr.getName().equals(name)) {
+                if (corr.getCor_value() > 0.6 || corr.getCor_value() < -0.6) {
+                    for (CompletionEntity completionEntity : completionEntityList) {
+                        if (completionEntity.getCom_name().equals(corr.getValue())) {
+                            compare_list.add(completionEntity);
+                        }
+                    }
+                }
+            }
+        }
+//
+        //익일예측 높은순으로 재정렬
+        compare_list.sort((p1,p2)-> (int)(p2.getNext_day_return()-p1.getNext_day_return()));
+
+        model.addAttribute("list", compare_list);
+
+        return "get";
     }
+
+//
+//    @GetMapping(value = "/viewgraph")
+//    public String ShowViewGraph(Model model) {
+//
+//        //사용자가 navbar들 누르고 들어왔을떄 표시
+//        List<CompletionEntity> compare_list = new ArrayList<>();
+//        List<CompletionEntity> completionEntityList = stockSerivce.selectTotals();
+//        List<corrEntity> corrEntityList = corrService.findAll();
+//
+//        //최대값구하는 로직
+//        List<Double> Doublelist = new ArrayList<>();
+//        for (CompletionEntity completionEntity : completionEntityList) {
+//            Doublelist.add(completionEntity.getNext_day_return());
+//        }
+//        Double max_value = Collections.max(Doublelist);
+//        String max_name ="";
+//        System.out.println(max_value);
+//        for (CompletionEntity completionEntity : completionEntityList) {
+//            if (max_value.equals(completionEntity.getNext_day_return())) {
+//                max_name = completionEntity.getCom_name();
+//                model.addAttribute("model", completionEntity);
+//            }
+//        }
+//
+//        for (corrEntity corr : corrEntityList) {
+////            //임시로 다른것도표시하게
+//            if (corr.getName().equals(max_name)){
+//            //if (corr.getName().equals("조비")) {
+//                if (corr.getCor_value() > 0.6 || corr.getCor_value() < -0.6) {
+//                    for (CompletionEntity completionEntity : completionEntityList) {
+//                        if (completionEntity.getCom_name().equals(corr.getValue())) {
+//                            compare_list.add(completionEntity);
+//                        }
+//                    }
+//                }
+//            }
+//        }   for (CompletionEntity entity : compare_list) {
+////            System.out.println("before"+entity.getNext_day_return());
+////        }
+//
+////
+////        for (CompletionEntity entity : compare_list) {
+////                System.out.println("after"+entity.getNext_day_return());
+////        }
+//        //익일예측 높은순으로 재정렬
+//        compare_list.sort((p1,p2)-> (int)(p2.getNext_day_return()-p1.getNext_day_return()));
+//        model.addAttribute("list", compare_list);
+//
+//        return "showviewgraph";
+//    }
+
 
 }

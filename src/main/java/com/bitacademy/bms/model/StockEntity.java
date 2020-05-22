@@ -1,17 +1,16 @@
 package com.bitacademy.bms.model;
 
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
-@Data
 @Entity
-@Table(name = "stock_day")
+@Getter
+@Setter
+@AllArgsConstructor @NoArgsConstructor
+@Table(name = "stock_predict")
 public class StockEntity {
 
     @javax.persistence.Id
@@ -27,24 +26,27 @@ public class StockEntity {
     @Column(name = "date")
     private Date date;
 
-    @Column(name = "price_closing")
-    private String price_closing;
+    @Column(name = "tod_price")
+    private String tod_price;
 
-    @Column(name = "difference")
+    @Column(name = "tod_status")
     private String difference;
 
-    @Column(name = "price_market")
-    private String price_market;
+    @Column(name = "tom_price")
+    private String tom_price;
 
-    @Column(name = "price_high")
-    private String price_high;
+    @Column(name = "tom_status")
+    private String tom_status;
 
-    @Column(name = "price_low")
-    private String price_low;
+    @Column(name = "match_status")
+    private String match_status;
 
-    @Column(name = "volume")
-    private String volume;
+    @Column(name = "price_error")
+    private String price_error;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "return")
+    private String Yield;
+
 }
+
+
