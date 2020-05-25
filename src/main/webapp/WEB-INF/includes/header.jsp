@@ -22,7 +22,6 @@
     <div class="w3-top">
         <div class="w3-bar w3-white w3-wide  w3-card">
             <a href="/" class="w3-bar-item w3-button">BMS Solution</a>
-            <!-- Float links to the right. Hide them on small screens -->
             <div class="w3-right w3-hide-small">
                 <a href="/" class="w3-bar-item w3-button">Home</a>
                 <a href="/view" class="w3-bar-item w3-button">ViewMore</a>

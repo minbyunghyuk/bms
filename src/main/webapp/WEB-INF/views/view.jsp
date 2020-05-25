@@ -11,7 +11,7 @@
             <div class="container">
 
                 <table class="table table-striped custab">
-                    <h2>전체 예상 종목  </h2>
+                    <h2>전체 예상 종목 </h2>
                     <thead>
                     <tr>
                         <th class="text-center">주식명</th>
@@ -25,8 +25,8 @@
                     <c:forEach items="${list}" var="item">
                         <tbody>
                         <tr>
-                            <td  style="cursor:pointer;" class="text-center text-primary" width="192"
-                                 onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
+                            <td style="cursor:pointer;" class="text-center text-primary" width="192"
+                                onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
                                 <c:out value="${item.com_name}"/>
                             </td>
                             <td class="text-center" width="192" style="word-break:break-all"><c:out
@@ -35,9 +35,11 @@
                             <c:if test="${item.next_day_return >0.0}">
                                 <td>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                             aria-valuemax="100" style="width:100%;color:wheat;" >
-                                            <c:out value="${item.next_day_return}"/>%(<c:out value="${item.next_day_return_value}"/>)
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100" style="width:100%;color:wheat;">
+                                            <c:out value="${item.next_day_return}"/>%(<c:out
+                                                value="${item.next_day_return_value}"/>)
                                         </div>
                                     </div>
                                 </td>
@@ -45,9 +47,11 @@
                             <c:if test="${item.next_day_return < 0.0}">
                                 <td>
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                             aria-valuemax="100" style="width:100%;color:wheat;" >
-                                            <c:out value="${item.next_day_return}"/>%(<c:out value="${item.next_day_return_value}"/>)
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60"
+                                             aria-valuemin="0"
+                                             aria-valuemax="100" style="width:100%;color:wheat;">
+                                            <c:out value="${item.next_day_return}"/>%(<c:out
+                                                value="${item.next_day_return_value}"/>)
                                         </div>
                                     </div>
                                 </td>
@@ -55,7 +59,8 @@
                             <td>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                         aria-valuemax="100" style="width:<c:out value="${item.mean_match_status*100}"/>%;">
+                                         aria-valuemax="100"
+                                         style="width:<c:out value="${item.mean_match_status*100}"/>%;">
                                         <fmt:formatNumber value="${item.mean_match_status*100}"/>%
                                     </div>
                                 </div>
@@ -78,3 +83,9 @@
         </div>
     </div>
 </div>
+
+<script>
+
+
+
+</script>
