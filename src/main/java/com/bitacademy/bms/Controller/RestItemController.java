@@ -27,23 +27,21 @@ public class RestItemController {
 
     @RequestMapping(value = "/getjsonlist",  produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Collection<HashMap<String, String>> getjsonlist(@RequestParam(value = "name",required = false, defaultValue = "아시아종묘") String name) throws ParseException {
+    public Collection<HashMap<String, String>> getjsonlist(@RequestParam(value = "name") String name) throws ParseException {
 
         String start = "2020-01-01";
         java.sql.Date startdate = java.sql.Date.valueOf(start);
-        String end = "2020-03-31";
-        java.sql.Date enddate = java.sql.Date.valueOf(end);
+
+        java.util.Date today = new java.util.Date();
+
         val dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        JSONArray jsonArray = new JSONArray();
-        List<StockEntity> resultEntityList = stockSerivce.findAllByDateBetween(startdate, enddate);
+        List<StockEntity> resultEntityList = stockSerivce.findAllByDateBetween(startdate, today);
         Collection<HashMap<String, String>> hashMap = new ArrayList<>();
-        System.out.println(name);
 
         for (StockEntity i:resultEntityList) {
             if (i.getCom_name().equals(name)) {
                 HashMap<String, String> map = new HashMap<>();
                 String date = dateFormat.format(i.getDate());
-                //Date date =i.getDate();
                 String getTod_price = i.getTod_price();
                 String getTom_price = i.getTom_price();
                 map.put("date", date);
@@ -55,5 +53,7 @@ public class RestItemController {
 
         return hashMap;
     }
+
+
 
 }

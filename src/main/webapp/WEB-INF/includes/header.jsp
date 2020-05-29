@@ -25,8 +25,7 @@
             <div class="w3-right w3-hide-small">
                 <a href="/" class="w3-bar-item w3-button">Home</a>
                 <a href="/view" class="w3-bar-item w3-button">ViewMore</a>
-                <a href="/get" class="w3-bar-item w3-button">ShowViewGraph</a>
-                <a href="#contact" class="w3-bar-item w3-button">Developer process</a>
+<%--                <a href="/devpro" class="w3-bar-item w3-button">Developer process</a>--%>
             </div>
         </div>
     </div>
