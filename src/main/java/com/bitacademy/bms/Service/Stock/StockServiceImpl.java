@@ -5,6 +5,7 @@ import com.bitacademy.bms.model.CompletionEntity;
 import com.bitacademy.bms.model.StockEntity;
 import com.bitacademy.bms.model.corrEntity;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class StockServiceImpl implements StockSerivce {
@@ -34,8 +35,14 @@ public class StockServiceImpl implements StockSerivce {
         return stockRepositroy.findByIdx(no);
     }
 
+    /**
+     *  총 합계  조회
+     */
     @Override
     public List<CompletionEntity> selectTotals() {
+        // log
+        log.debug("on select totals");
+
         List<Object[]> resultList = stockRepositroy.selectTotals();
         List<CompletionEntity> completionEntityList = resultList.stream().map(product -> new CompletionEntity(
                (String) product[0],
@@ -48,8 +55,8 @@ public class StockServiceImpl implements StockSerivce {
                 (Double) product[7],
                 (Double) product[8],
                 (Double) product[9],
-                (Double) product[10],
-                (Double) product[11])).collect(Collectors.toList());
+                (Double) product[10])).collect(Collectors.toList());
+                //(Double) product[11])).collect(Collectors.toList());
         return completionEntityList;
     }
 

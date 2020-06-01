@@ -85,7 +85,7 @@
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                          aria-valuemax="100" style="width:100%;color:wheat;">
                                         <c:out value="${model.next_day_return}"/>%(<c:out
-                                            value="${model.next_day_return_value}"/>)
+                                            value="${model.next_day_return}"/>)
                                     </div>
                                 </div>
                             </td>
@@ -97,7 +97,7 @@
                                          aria-valuemin="0"
                                          aria-valuemax="100" style="width:100%;color:wheat;">
                                         <c:out value="${model.next_day_return}"/>%(<c:out
-                                            value="${model.next_day_return_value}"/>)
+                                            value="${model.next_day_return}"/>)
                                     </div>
                                 </div>
                             </td>
@@ -175,7 +175,7 @@
                                                  aria-valuemin="0"
                                                  aria-valuemax="100" style="width:100%;color:wheat;">
                                                 <c:out value="${item.next_day_return}"/>%(<c:out
-                                                    value="${item.next_day_return_value}"/>)
+                                                    value="${item.next_day_return}"/>)
                                             </div>
                                         </div>
                                     </td>
@@ -187,7 +187,7 @@
                                                  aria-valuemin="0"
                                                  aria-valuemax="100" style="width:100%;color:wheat;">
                                                 <c:out value="${item.next_day_return}"/>%(<c:out
-                                                    value="${item.next_day_return_value}"/>)
+                                                    value="${item.next_day_return}"/>)
                                             </div>
                                         </div>
                                     </td>
@@ -383,7 +383,7 @@
                 d1 = data[i],
                 d = x0 - d0.date > d1.date - x0 ? d1 : d0;
             focus.attr("transform", "translate(" + x(d.date) + "," + y(d.getTod_price) + ")");
-            var text =  parseDate(d.date)+"실제값:"+d.getTod_price +"예측값:"+d.getTom_price;
+            var text ="실제값:"+d.getTod_price +"예측값:"+d.getTom_price;
             focus.select("text").text(function () {
 
                 return text;

@@ -48,6 +48,7 @@ public class RestItemController {
                 map.put("getTod_price", getTod_price);
                 map.put("getTom_price", getTom_price);
                 hashMap.add(map);
+
             }
         }
 

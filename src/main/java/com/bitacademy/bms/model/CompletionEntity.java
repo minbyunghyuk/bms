@@ -31,7 +31,7 @@ public class CompletionEntity {
 
     private Double next_day_return;
 
-    private Double next_day_return_value;
+   // private Double next_day_return_value;
 
     private Double mean_match_status;
 

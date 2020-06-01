@@ -52,7 +52,7 @@
                                              aria-valuemin="0"
                                              aria-valuemax="100" style="width:100%;color:wheat;">
                                             <c:out value="${item.next_day_return}"/>%(<c:out
-                                                value="${item.next_day_return_value}"/>)
+                                                value="${item.next_day_return}"/>)
                                         </div>
                                     </div>
                                 </td>
@@ -64,7 +64,7 @@
                                              aria-valuemin="0"
                                              aria-valuemax="100" style="width:100%;color:wheat;">
                                             <c:out value="${item.next_day_return}"/>%(<c:out
-                                                value="${item.next_day_return_value}"/>)
+                                                value="${item.next_day_return}"/>)
                                         </div>
                                     </div>
                                 </td>

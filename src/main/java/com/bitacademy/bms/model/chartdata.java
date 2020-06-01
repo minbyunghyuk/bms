@@ -1,11 +1,13 @@
 package com.bitacademy.bms.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class chartdata {
     public Date  date;
