@@ -4,7 +4,6 @@
 
 <%@ include file="../includes/header.jsp" %>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -17,41 +16,50 @@
     <div class="container">
         <div class="content">
             <div class="container">
-                <table class="table table-striped custab" id="stock" class="display" style="width:100%">
+                <table class="table table-striped custab" id="stock" class="display" >
                     <h2>전체 예상 종목 </h2>
                     <thead>
                     <tr>
-                        <th class="text-center" width="176">주식명</th>
-                        <th class="text-center" width="160">금일종가</th>
-                        <th class="text-center" width="100">익일예측</th>
-                        <th class="text-center" width="176">등락적중률</th>
-                        <th class="text-center" width="176">최근한달수익율</th>
-                        <th class="text-center" width="176">평균오차범위</th>
+                        <th class="text-center" >주식명</th>
+                        <th class="text-center" >금일종가</th>
+                        <th class="text-center" >익일예측</th>
+                        <th class="text-center" >등락적중률</th>
+                        <th class="text-center">최근한달수익율</th>
+                        <th class="text-center">평균오차범위</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${list}" var="item">
+                        <%--주식명--%>
                         <tr>
-                            <td style="cursor:pointer;" class="text-center text-primary" width="192"
+                            <td style="cursor:pointer;" class="text-center text-primary" width="165"
                                 onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
                                 <c:out value="${item.com_name}"/>
                             </td>
+                            <%--금일종가
+                            status 증가 , 감소 ,변화없음  3개  --%>
                             <c:if test="${item.tod_status < 0}">
-                            <td class="text-center" width="192" style="word-break:break-all">
+                            <td class="text-center" style="word-break:break-all">
                                     <c:out value="${item.tod_price}"/> <span class="triangle test_1"></span>
-
+                            </td>
                                 </c:if>
                                 <c:if test="${item.tod_status > 0}">
-                            <td class="text-center" width="192" style="word-break:break-all">
+                            <td class="text-center" style="word-break:break-all">
                                 <c:out value="${item.tod_price}"/> <span class="triangle test_2"> </span>
                             </td>
                             </c:if>
+                            <c:if test="${item.tod_status == 0}">
+                                <td class="text-center" style="word-break:break-all">
+                                    <c:out value="${item.tod_price}"/>
+                                </td>
+                            </c:if>
+                                <%--익일예측--%>
                             <c:if test="${item.next_day_return >0.0}">
-                                <td>
+                                <td  class="text-center" style="word-break:break-all">
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" aria-valuenow="60"
                                              aria-valuemin="0"
-                                             aria-valuemax="100" style="width:100%;color:wheat;">
+                                             aria-valuemax="100" style="width:40%;color:wheat;">
                                             <c:out value="${item.next_day_return}"/>%(<c:out
                                                 value="${item.next_day_return}"/>)
                                         </div>
@@ -59,18 +67,19 @@
                                 </td>
                             </c:if>
                             <c:if test="${item.next_day_return < 0.0}">
-                                <td>
+                                <td class="text-center" style="word-break:break-all">
                                     <div class="progress">
                                         <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60"
                                              aria-valuemin="0"
-                                             aria-valuemax="100" style="width:100%;color:wheat;">
+                                             aria-valuemax="100" style="width:40%;color:wheat;">
                                             <c:out value="${item.next_day_return}"/>%(<c:out
                                                 value="${item.next_day_return}"/>)
                                         </div>
                                     </div>
                                 </td>
                             </c:if>
-                            <td>
+                                <%--등락적중률--%>
+                            <td class="text-center"  style="word-break:break-all">
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                          aria-valuemax="100"
@@ -79,16 +88,31 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                                <%--최근한달수익율--%>
+                            <c:if test="${item.tod_return > 1}">
+                            <td class="text-center" style="word-break:break-all">
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                          aria-valuemax="100" style="width:<c:out value="${item.tod_return*40}"/>%;">
-                                        <fmt:formatNumber value="${item.tod_return*100}"/>%
+                                        <fmt:formatNumber value="${item.tod_return*100-100}"/>%
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center" width=192 style="word-break:break-all"><c:out
-                                    value="±${item.mean_price_error}"/></td>
+                            </c:if>
+                            <c:if test="${item.tod_return < 1}">
+                                <td class="text-center" style="word-break:break-all">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                                             aria-valuemax="100" style="width:<c:out value="${item.tod_return*40}"/>%;">
+                                            <fmt:formatNumber value="${item.tod_return*100-100}"/>%
+                                        </div>
+                                    </div>
+                                </td>
+                            </c:if>
+                                <%--오차율--%>
+                            <td class="text-center" width="165" style="word-break:break-all"><c:out
+                                    value="${item.mean_price_error}"/>%
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>

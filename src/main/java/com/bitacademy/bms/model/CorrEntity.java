@@ -1,32 +1,33 @@
 package com.bitacademy.bms.model;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
 
+
+/**
+ *
+ * 상관관계 계산시 필요한 항목
+ *  cor value 값을 곱함
+ */
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name="stock_corr")
-public class corrEntity {
+public class CorrEntity {
 
     @javax.persistence.Id
     @GeneratedValue
     private Long idx;
 
-    @Column(name="name")
+    @Column(name="stock_A")
     private String name;
 
-    @Column(name="value")
+    @Column(name="stock_B")
     private String value;
 
     @Column(name="cor_value")

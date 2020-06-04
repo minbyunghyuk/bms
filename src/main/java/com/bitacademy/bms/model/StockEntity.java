@@ -6,10 +6,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
+
+
+
+
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor @NoArgsConstructor
 @Table(name = "stock_predict")
 public class StockEntity {
 
