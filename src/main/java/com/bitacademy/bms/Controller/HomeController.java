@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -64,6 +65,9 @@ public class HomeController {
 
         model.addAttribute("list", completionEntityList);
 
+        log.info(":"+completionEntityList.get(1).getMean_price_error());
+
+
         return "view";
     }
     /**
@@ -74,10 +78,11 @@ public class HomeController {
     @GetMapping(value = "/get")
     public String get(@RequestParam(value = "name", required = false) String name, Model model) {
 
-
-        CompletionEntity searchNameModel =  stockSerivce.findCompletionEntityByName(name);
+        List<CompletionEntity> completionEntityList= stockSerivce.getFullList();
+        CompletionEntity searchNameModel =  stockSerivce.findCompletionEntityByName(name,completionEntityList);
+        String predictDate = stockSerivce.getPredictDay(searchNameModel.getTod());
         model.addAttribute("model", searchNameModel);
-
+        model.addAttribute("predictDate",predictDate);
 
         List<CompletionEntity> similarList = stockSerivce.getSimilarList(name);
         model.addAttribute("list", similarList);

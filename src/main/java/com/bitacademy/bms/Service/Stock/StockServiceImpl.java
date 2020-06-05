@@ -66,10 +66,9 @@ public class StockServiceImpl implements StockSerivce {
      * 그래프화면에서 사용자가 선택한 주식명 한개
      */
     @Override
-    public CompletionEntity findCompletionEntityByName(String name) {
+    public CompletionEntity findCompletionEntityByName(String name , List<CompletionEntity> completionEntityList) {
         String seachItemName = name;
         CompletionEntity seachItem = new CompletionEntity();
-        List<CompletionEntity> completionEntityList = this.getFullList();
         for (CompletionEntity item : completionEntityList) {
             if (item.getCom_name().equals(seachItemName)) {
                 seachItem = item;
@@ -93,16 +92,20 @@ public class StockServiceImpl implements StockSerivce {
 
         List<CompletionEntity> similarList = new ArrayList<>();
         List<CorrEntity> corrEntityList = corrService.findAllByName(serachName);
-
+        List<CompletionEntity> CompletionEntityList =this.getFullList();
         for (CorrEntity corr : corrEntityList) {
             if (corr.getCor_value() > 0.6 || corr.getCor_value() < -0.6) {
                 similarItemName = corr.getValue();
                 //이름없을수도있음 예외처리
-                CompletionEntity similarItem = this.findCompletionEntityByName(similarItemName);
+                CompletionEntity similarItem = this.findCompletionEntityByName(similarItemName,CompletionEntityList);
                 if (!(similarItem.getCom_name() == null))
                     similarList.add(similarItem);
 
             }
+        }
+        if (similarList.size() >=5) {
+            similarList = similarList.subList(0, 5);
+            similarList.sort((p1, p2) -> (int) (p2.getNext_day_return() - p1.getNext_day_return()));
         }
         log.info("Search Similar Stock item list   : " + similarList.size());
         return similarList;
@@ -153,7 +156,7 @@ public class StockServiceImpl implements StockSerivce {
             if (i == size-1) {
                 Date lastDate =parseNameList.get(i).getDate();
                 String lastTomPrice = parseNameList.get(i).getTom_price();
-                HashMap<String, String> predictMap = getPredictMap(lastDate,lastTomPrice,dateFormat);
+                HashMap<String, String> predictMap = getPredictMap(lastDate,lastTomPrice);
                 jsonMap.add(predictMap);
             }
         }
@@ -162,18 +165,19 @@ public class StockServiceImpl implements StockSerivce {
     }
 
     //마지막날짜를 받아서 예측날짜로 변환
-    public Date getPredictDay(Date lastDate){
+    @Override
+    public String getPredictDay(Date lastDate){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(lastDate);
         calendar.add(Calendar.DATE, 1);
-        return calendar.getTime();
+        return dateFormat.format(calendar.getTime());
     }
 
-    // MAP 형태로 변환 하는 함수
-    public HashMap<String ,String > getPredictMap(Date lastDate ,String TomPrice, SimpleDateFormat dateFormat ){
+    // 마지막 예측날만  MAP 형태로 변환 하는 함수
+    public HashMap<String ,String > getPredictMap(Date lastDate ,String TomPrice){
         HashMap<String, String> predictMap = new HashMap<>();
-        Date predictDate =getPredictDay(lastDate);
-        String stockPredictDate = dateFormat.format(predictDate);
+        String stockPredictDate = getPredictDay(lastDate);
         String stockPredictTomPrice = TomPrice;
         predictMap.put("date", stockPredictDate);
         predictMap.put("Tom_price", stockPredictTomPrice);

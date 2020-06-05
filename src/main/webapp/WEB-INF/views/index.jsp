@@ -23,9 +23,8 @@
                         <th class="text-center">주식명</th>
                         <th class="text-center">금일종가</th>
                         <th class="text-center">명일예측</th>
-                        <th class="text-center">명일예측등락률</th>
                         <th class="text-center">등락적중률</th>
-                        <th class="text-center" title="한달전 종가에서 30일 기준으로 투자를 진행한 경우">최근한달수익율</th>
+                        <th class="text-center">최근3개월수익율</th>
                         <th class="text-center">평균오차범위</th>
                     </tr>
                     </thead>
@@ -36,65 +35,45 @@
                                 onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
                                 <c:out value="${item.com_name}"/>
                             </td>
-                                <%--익일예측종가--%>
+                                <%--r종가--%>
+                            <c:if test="${item.tod_status < 0}">
+
+                                <td class="text-center"  width="165">
+                                    <c:out value="${item.tod_price}"/> <span class="triangle test_1"></span>
+
+                                </td>
+                            </c:if>
+                            <c:if test="${item.tod_status > 0}">
+                                <td class="text-center"  width="165">
+                                    <c:out value="${item.tod_price}"/> <span class="triangle test_2"></span>
+
+                                </td>
+                            </c:if>
+                            <c:if test="${item.tod_status == 0}">
+                                <td class="text-center"  width="165">
+                                    <c:out value="${item.tod_price}"/>
+                                </td>
+                            </c:if>
                             <c:if test="${item.tom_status < 0}">
-
-                                <td class="text-center" style="word-break:break-all" width="165">
-                                    <c:out value="${item.tom_price}"/> <span class="triangle test_1"></span>
-
+                                <td class="text-center" width="165">
+                                    <c:out value="${item.tom_price}"/><span class="bh-font-12size">(<c:out value="${item.next_day_return}"/>%)</span><span
+                                        class="triangle test_1"></span>
                                 </td>
                             </c:if>
                             <c:if test="${item.tom_status > 0}">
-                                <td class="text-center" style="word-break:break-all" width="165">
-                                    <c:out value="${item.tom_price}"/> <span class="triangle test_2"></span>
-
+                                <td class="text-center" width="165">
+                                    <c:out value="${item.tom_price}"/><span class="bh-font-12size">(<c:out value="${item.next_day_return}"/>%)</span><span
+                                        class="triangle test_2"> </span>
                                 </td>
                             </c:if>
                             <c:if test="${item.tom_status == 0}">
-                                <td class="text-center" style="word-break:break-all" width="165">
-                                    <c:out value="${item.tom_price}"/>
+                                <td class="text-center" width="165">
+                                    <c:out value="${item.tom_price}"/><span class="bh-font-12size">(<c:out value="${item.next_day_return}"/>%)</span>
                                 </td>
                             </c:if>
-                            <c:if test="${item.tod_status < 0}">
-                            <td class="text-center" style="word-break:break-all" width="165">
-                                    <c:out value="${item.tod_price}"/> <span class="triangle test_1"></span>
-                            </td>
-                                </c:if>
-                                <c:if test="${item.tod_status > 0}">
-                            <td class="text-center"  style="word-break:break-all" width="165">
-                                <c:out value="${item.tod_price}"/> <span class="triangle test_2"> </span>
-                            </td>
-                                </c:if>
-                            <c:if test="${item.tod_status == 0}">
-                                <td class="text-center" style="word-break:break-all" width="165">
-                                    <c:out value="${item.tod_price}"/> <span></span>
-                                </td>
-                            </c:if>
-                            <c:if test="${item.next_day_return >0.0}">
-                                <td class="text-center"  style="word-break:break-all" width="165">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100" style="width:100%;color:wheat;">
-                                            <c:out value="${item.next_day_return}"/>%(<c:out
-                                                value="${item.next_day_return}"/>)
-                                        </div>
-                                    </div>
-                                </td>
-                            </c:if>
-                            <c:if test="${item.next_day_return < 0.0}">
-                                <td  class="text-center"  style="word-break:break-all" width="165">
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100" style="width:100%;color:wheat;">
-                                            <c:out value="${item.next_day_return}"/>%(<c:out
-                                                value="${item.next_day_return}"/>)
-                                        </div>
-                                    </div>
-                                </td>
-                            </c:if>
-                            <td>
+
+                            <%-- 등락적중률--%>
+                            <td class="text-center" width="165">
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                          aria-valuemax="100"
@@ -124,8 +103,7 @@
                                     </div>
                                 </td>
                             </c:if>
-                            <td class="text-center"  style="word-break:break-all" width="165"><c:out
-                                    value="${item.mean_price_error}"/>%
+                            <td class="text-center"  style="word-break:break-all" width="165">±<c:out value="${item.mean_price_error}"/>%
                             </td>
                         </tr>
                         </tbody>

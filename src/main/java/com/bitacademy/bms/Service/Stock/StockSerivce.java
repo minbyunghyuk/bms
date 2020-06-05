@@ -14,8 +14,6 @@ public interface StockSerivce {
 
     List<StockEntity> findAllByDateBetween(Date start, Date end);
 
-    CompletionEntity findCompletionEntityByName(String name);
-
     List<CompletionEntity>getFullList();
 
     List<CompletionEntity>getHomeList();
@@ -24,6 +22,7 @@ public interface StockSerivce {
 
     Collection<HashMap<String, String>> getChartDataList(String name);
 
+    CompletionEntity findCompletionEntityByName(String name, List<CompletionEntity> completionEntityList);
 
-
+    String getPredictDay(Date lastDate);
 }
