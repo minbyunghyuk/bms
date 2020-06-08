@@ -1,14 +1,13 @@
 package com.bitacademy.bms.model;
 
 
-import lombok.*;
+
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-
-
-
-
 
 @Entity
 @Getter
@@ -16,8 +15,8 @@ import java.util.Date;
 @Table(name = "stock_predict")
 public class StockEntity {
 
-    @javax.persistence.Id
-    @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column(name = "com_name")

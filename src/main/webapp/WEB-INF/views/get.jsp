@@ -5,49 +5,10 @@
 
 
 <%@ include file="../includes/header.jsp" %>
-
-
 <style>
-
-
-    .line {
-        fill: none;
-        stroke: steelblue;
-        stroke-width: 1.5px;
+    .custab{
+        margin: 0;
     }
-
-    .legend rect {
-        fill: white;
-        stroke: black;
-        opacity: 0.8;
-    }
-
-    .overlay {
-        fill: none;
-        pointer-events: all;
-    }
-
-    .focus circle {
-        fill: #F1F3F3;
-        stroke: steelblue;
-        stroke-width: 2px;
-    }
-
-    .hover-line {
-        stroke: steelblue;
-        stroke-width: 2px;
-        stroke-dasharray: 3, 3;
-    }
-
-    body, h1, h2, h3, h4, h5, h6, table {
-        font-family: "Raleway", sans-serif
-    }
-
-    .w3-bar .w3-button {
-        padding: 20px;
-    }
-
-
 </style>
 <div class="row">
     <div class="container">
@@ -61,13 +22,12 @@
                         <th class="text-center">금일종가</th>
                         <th class="text-center">익일예측</th>
                         <th class="text-center">등락적중률</th>
-                        <th class="text-center">최근3개월수익율</th>
+                        <th class="text-center" title="3개월전 종가에서 90일 기준으로 투자를 진행한 경우">*최근3개월수익율</th>
                         <th class="text-center">평균오차범위</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-
                         <%--주식명--%>
                         <td class="text-center" style="word-break:break-all" width="175">
                             <c:out value="${model.com_name}"/>
@@ -80,31 +40,34 @@
                             </td>
                         </c:if>
                         <c:if test="${model.tod_status > 0}">
-                            <td class="text-center" style="word-break:break-all"  width="175">
+                            <td class="text-center" style="word-break:break-all" width="175">
                                 <c:out value="${model.tod_price}"/> <span class="triangle test_2"></span>
 
                             </td>
                         </c:if>
                         <%--익일예측종가--%>
-                            <c:if test="${model.tom_status < 0}"  >
-                                <td class="text-center" style="word-break:break-all" width="175">
-                                    <c:out value="${model.tom_price}"/><span class="bh-font-12size">(<c:out value="${model.next_day_return}"/>%)</span><span
-                                        class="triangle test_1"></span>
-                                </td>
-                            </c:if>
-                            <c:if test="${model.tom_status > 0}">
-                                <td class="text-center" style="word-break:break-all" width="175" >
-                                    <c:out value="${model.tom_price}"/><span class="bh-font-12size">(<c:out value="${model.next_day_return}"/>%)</span><span
-                                        class="triangle test_2"> </span>
-                                </td>
-                            </c:if>
-                            <c:if test="${model.tom_status == 0}">
-                                <td class="text-center" style="word-break:break-all" width="175">
-                                    <c:out value="${model.tom_price}"/><span class="bh-font-12size">(<c:out value="${model.next_day_return}"/>%)</span>
-                                </td>
-                            </c:if>
+                        <c:if test="${model.tom_status < 0}">
+                            <td class="text-center" style="word-break:break-all" width="175">
+                                <c:out value="${model.tom_price}"/><span class="bh-font-12size">(<c:out
+                                    value="${model.next_day_return}"/>%)</span><span
+                                    class="triangle test_1"></span>
+                            </td>
+                        </c:if>
+                        <c:if test="${model.tom_status > 0}">
+                            <td class="text-center" style="word-break:break-all" width="175">
+                                <c:out value="${model.tom_price}"/><span class="bh-font-12size">(<c:out
+                                    value="${model.next_day_return}"/>%)</span><span
+                                    class="triangle test_2"> </span>
+                            </td>
+                        </c:if>
+                        <c:if test="${model.tom_status == 0}">
+                            <td class="text-center" style="word-break:break-all" width="175">
+                                <c:out value="${model.tom_price}"/><span class="bh-font-12size">(<c:out
+                                    value="${model.next_day_return}"/>%)</span>
+                            </td>
+                        </c:if>
                         <%--등락적중률 --%>
-                       <td class="text-center" style="word-break:break-all"width="210">
+                        <td class="text-center" style="word-break:break-all" width="210">
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
                                      aria-valuemax="100"
@@ -135,8 +98,9 @@
                                 </div>
                             </td>
                         </c:if>
-                    <%--평균오차범위--%>
-                        <td class="text-center" style="word-break:break-all" width="193">±<c:out value="${model.mean_price_error}"/>%
+                        <%--평균오차범위--%>
+                        <td class="text-center" style="word-break:break-all" width="193"><c:out
+                                value="${model.mean_price_error}"/>%
                     </tr>
                     </tbody>
 
@@ -264,17 +228,17 @@
                                     </td>
                                 </c:if>
                                     <%--오차율--%>
-                                <td class="text-center"  style="word-break:break-all"  width="193" >
-                                    ±<fmt:formatNumber value="${item.mean_price_error}"/>%
+                                <td class="text-center" style="word-break:break-all" width="193">
+                                    <fmt:formatNumber value="${item.mean_price_error}"/>%
                                 </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:if>
-                <button type="button" class="btn btn-primary  pull-right" onclick="location.href='view'">전체리스트로 돌아가기
-                </button>
             </div>
+            <button type="button" class="btn btn-primary  pull-right" onclick="location.href='view'">전체리스트로 돌아가기
+            </button>
         </div>
     </div>
 </div>
@@ -349,10 +313,10 @@
 
         y.domain(
             [d3.min(data, function (d) {
-                return Math.min(d.Tod_price, d.Tom_price);
+                return Math.min(d.Tod_price * 0.9);
             }),
                 d3.max(data, function (d) {
-                    return Math.max(d.Tod_price, d.Tom_price);
+                    return Math.max(d.Tod_price);
                 })
             ]);
 
@@ -361,10 +325,10 @@
         }));
         y1.domain(
             [d3.min(data, function (d) {
-                return Math.min(d.Tod_price, d.Tom_price);
+                return Math.min(d.Tom_price * 0.9);
             }),
                 d3.max(data, function (d) {
-                    return Math.max(d.Tod_price, d.Tom_price);
+                    return Math.max(d.Tom_price);
                 })
             ]);
 
@@ -412,7 +376,7 @@
             });
 
         legend.append("rect")
-            .attr("x", width +50)
+            .attr("x", width + 50)
             .attr("y", 330)
             .attr("width", 19)
             .attr("height", 19)

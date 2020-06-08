@@ -15,7 +15,41 @@ div.button input {
     font-size: 18px;
 }
 
+.custab{
+    margin: 0;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
 
+.legend rect {
+    fill: white;
+    stroke: black;
+    opacity: 0.8;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.focus circle {
+    fill: #F1F3F3;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
+
+.hover-line {
+    stroke: steelblue;
+    stroke-width: 2px;
+    stroke-dasharray: 3, 3;
+}
+
+body, h1, h2, h3, h4, h5, h6, table {
+    font-family: "Raleway", sans-serif
+}
 .container {
     max-width: 1200px;
     margin-left: auto;
@@ -30,6 +64,7 @@ div.button input {
     margin-right: auto;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 0;
 }
 
 .svg {

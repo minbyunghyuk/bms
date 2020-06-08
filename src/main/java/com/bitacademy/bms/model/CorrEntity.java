@@ -3,10 +3,8 @@ package com.bitacademy.bms.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 
 /**
@@ -20,9 +18,10 @@ import javax.persistence.Table;
 @Table(name="stock_corr")
 public class CorrEntity {
 
-    @javax.persistence.Id
-    @GeneratedValue
-    private Long idx;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
 
     @Column(name="stock_A")
     private String name;
