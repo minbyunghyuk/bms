@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Log4j
+
 @Service
 public class StockServiceImpl implements StockSerivce {
 
@@ -32,7 +32,6 @@ public class StockServiceImpl implements StockSerivce {
         completionEntityList = completionEntityList.subList(0, 5);
         completionEntityList.sort((p1, p2) -> (int) (p2.getNext_day_return() - p1.getNext_day_return()));
 
-        log.info("Main page Show Stock list Count : " + completionEntityList.size());
         return completionEntityList;
     }
 
@@ -48,7 +47,6 @@ public class StockServiceImpl implements StockSerivce {
                 (String) product[4], (String) product[5], (String) product[6], (Double) product[7],
                 (Double) product[8], (Double) product[9],
                 (Double) product[10])).collect(Collectors.toList());
-        log.info("View More page Show Stock list Count : " + completionEntityList.size());
         return completionEntityList;
     }
 
@@ -75,7 +73,6 @@ public class StockServiceImpl implements StockSerivce {
                 break;
             }
         }
-        log.info("User Select Stock Name : " + seachItem.getCom_name());
         return seachItem;
     }
 
@@ -107,7 +104,6 @@ public class StockServiceImpl implements StockSerivce {
             similarList = similarList.subList(0, 5);
             similarList.sort((p1, p2) -> (int) (p2.getNext_day_return() - p1.getNext_day_return()));
         }
-        log.info("Search Similar Stock item list   : " + similarList.size());
         return similarList;
     }
 

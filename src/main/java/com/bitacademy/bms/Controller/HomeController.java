@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @Controller
-@Log4j
+
 public class HomeController {
 
 
@@ -31,7 +31,6 @@ public class HomeController {
     @GetMapping(value = "/")
     public String index(Model model) {
         List<CompletionEntity> completionEntityList = stockSerivce.getHomeList();
-        log.info("get Stock list Count : " + completionEntityList.size());
         model.addAttribute("list", completionEntityList);
         return "index";
     }
@@ -44,9 +43,6 @@ public class HomeController {
         List<CompletionEntity> completionEntityList = stockSerivce.getFullList();
 
         model.addAttribute("list", completionEntityList);
-
-        log.info(":"+completionEntityList.get(1).getMean_price_error());
-
 
         return "view";
     }
