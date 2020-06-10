@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>BMS</title>
+    <title>SPS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/now-ui-kit.min.css" type="text/css"/>
     <link rel="stylesheet" href="assets/css/w3.css" type="text/css"/>
@@ -19,12 +19,12 @@
     </style>
 </head>
 <header class="w3-padding-32">
-    <div class="w3-top">
-        <div class="w3-bar w3-white w3-wide  w3-card">
-            <a href="/" class="w3-bar-item w3-button">BMS Solution</a>
+    <div class="w3-top ">
+        <div class="w3-bar w3-black w3-wide  w3-card">
+            <a href="/" class="w3-bar-item w3-button">SPS.com</a>
             <div class="w3-right w3-hide-small">
-                <a href="/" class="w3-bar-item w3-button">Home</a>
-                <a href="/view" class="w3-bar-item w3-button">ViewMore</a>
+                <a href="/" class="w3-bar-item w3-button">메인화면</a>
+                <a href="/view" class="w3-bar-item w3-button">전체종가조회</a>
 <%--                <a href="/devpro" class="w3-bar-item w3-button">Developer process</a>--%>
             </div>
         </div>

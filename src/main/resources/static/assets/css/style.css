@@ -85,7 +85,9 @@ h2 small {
 }
 
 p {
-
+    font-size: 20px;
+    margin: 20px 0;
+    text-align: center;
 }
 
 .responsive-table li {

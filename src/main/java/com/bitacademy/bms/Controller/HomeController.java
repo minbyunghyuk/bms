@@ -25,26 +25,6 @@ public class HomeController {
     @Autowired
     private StockSerivce stockSerivce;
 
-    @GetMapping(value = "/d3")
-    public String d3test(Model model) {
-
-
-        return "d3test";
-    }
-
-    @GetMapping(value = "/d32")
-    public String d3test2(Model model) {
-
-
-        return "d3test2";
-    }
-
-    @GetMapping(value = "/devpro")
-    public String devpro() {
-
-        return "devpro";
-    }
-
     /**
      * MainPage
      */
@@ -69,6 +49,16 @@ public class HomeController {
 
 
         return "view";
+    }
+
+    /**
+     * 발표용 Page
+     */
+    @GetMapping(value = "/devpro")
+    public String devProcess() {
+
+
+        return "devprocess";
     }
     /**
      *  graph Page
