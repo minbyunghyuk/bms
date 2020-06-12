@@ -23,6 +23,9 @@ public class HomeController {
 
 
     @Autowired
+
+
+
     private StockSerivce stockSerivce;
 
     /**
@@ -30,6 +33,7 @@ public class HomeController {
      */
     @GetMapping(value = "/")
     public String index(Model model) {
+
         List<CompletionEntity> completionEntityList = stockSerivce.getHomeList();
         model.addAttribute("list", completionEntityList);
         return "index";
@@ -64,14 +68,16 @@ public class HomeController {
     @GetMapping(value = "/get")
     public String get(@RequestParam(value = "name", required = false) String name, Model model) {
 
+
         List<CompletionEntity> completionEntityList= stockSerivce.getFullList();
         CompletionEntity searchNameModel =  stockSerivce.findCompletionEntityByName(name,completionEntityList);
         String predictDate = stockSerivce.getPredictDay(searchNameModel.getTod());
+        List<CompletionEntity> getsimilarPlusList = stockSerivce.getsimilarPlusList(name);
+        List<CompletionEntity> getsimilarMinusList = stockSerivce.getsimilarMinusList(name);
         model.addAttribute("model", searchNameModel);
         model.addAttribute("predictDate",predictDate);
-
-        List<CompletionEntity> similarList = stockSerivce.getSimilarList(name);
-        model.addAttribute("list", similarList);
+        model.addAttribute("Pluslist", getsimilarPlusList);
+        model.addAttribute("Minuslist", getsimilarMinusList);
 
 
         return "get";

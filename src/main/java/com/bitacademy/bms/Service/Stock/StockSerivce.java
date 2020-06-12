@@ -18,7 +18,9 @@ public interface StockSerivce {
 
     List<CompletionEntity>getHomeList();
 
-    List<CompletionEntity>getSimilarList(String name);
+    List<CompletionEntity>getsimilarPlusList(String name);
+
+    List<CompletionEntity>getsimilarMinusList(String name);
 
     Collection<HashMap<String, String>> getChartDataList(String name);
 

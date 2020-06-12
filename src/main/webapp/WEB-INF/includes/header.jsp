@@ -23,9 +23,9 @@
         <div class="w3-bar w3-black w3-wide  w3-card">
             <a href="/" class="w3-bar-item w3-button">SPS.com</a>
             <div class="w3-right w3-hide-small">
-                <a href="/" class="w3-bar-item w3-button">메인화면</a>
-                <a href="/view" class="w3-bar-item w3-button">전체종가조회</a>
-<%--                <a href="/devpro" class="w3-bar-item w3-button">Developer process</a>--%>
+                <a href="/" class="w3-bar-item w3-button">Main</a>
+                <a href="/view" class="w3-bar-item w3-button">All Stocks</a>
+                <a href="/devpro" class="w3-bar-item w3-button">Developer process</a>
             </div>
         </div>
     </div>

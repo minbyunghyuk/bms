@@ -22,7 +22,7 @@
                         <th class="text-center">익일예측</th>
                         <th class="text-center">예측등락률</th>
                         <th class="text-center">등락적중률</th>
-                        <th class="text-center" title="3개월전 종가에서 90일 기준으로 투자를 진행한 경우">*최근3개월수익율</th>
+                        <th class="text-center" title="최근 3개월 기준으로 투자를 진행한 경우">*최근3개월수익율</th>
                         <th class="text-center">평균오차범위</th>
                     </tr>
                     </thead>
@@ -48,7 +48,7 @@
                             </c:if>
                             <c:if test="${item.tod_status == 0}">
                                 <td class="text-center" style="word-break:break-all">
-                                    <fmt:formatNumber value="${item.tod_price}"/>
+                                    <fmt:formatNumber value="${item.tod_price}"/><span class="rectangle NO1"></span>
                                 </td>
                             </c:if>
                                 <%--익일예측--%>
@@ -74,6 +74,7 @@
                             <c:if test="${item.tom_status == 0}">
                                 <td class="text-center" style="word-break:break-all">
                                     <fmt:formatNumber value="${item.tom_price}"/>
+                                    <span class="rectangle test_3"></span>
                                 </td>
                                 <td class="text-center" style="word-break:break-all">
                                     <c:out value="${item.next_day_return}"/>%
