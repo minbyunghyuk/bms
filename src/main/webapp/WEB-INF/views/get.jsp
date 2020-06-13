@@ -428,19 +428,7 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var name = '<c:out value="${model.com_name}"/>';
-    var url = "http://localhost:8080/rest/getJsonList?name=" + name;
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        console.log(xhttp);
-
-        xhttp.onerror = function (e) {
-            alert("Unknown Error Occured. Server response not received.");
-        };
-
-        xhttp.open("Get", url, true);
-        xhttp.send();
-    }
+    var url = "http://192.168.1.254:8080/rest/getJsonList?name=" + name;
 
         d3.json(url, function (error, data) {
 
