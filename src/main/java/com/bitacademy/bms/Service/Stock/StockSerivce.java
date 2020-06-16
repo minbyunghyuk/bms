@@ -18,13 +18,15 @@ public interface StockSerivce {
 
     List<CompletionEntity>getHomeList();
 
-    List<CompletionEntity>getsimilarPlusList(String name);
+    List<CompletionEntity>getSimilarList(String name);
 
-    List<CompletionEntity>getsimilarMinusList(String name);
-
-    Collection<HashMap<String, String>> getChartDataList(String name);
+    Collection<HashMap<String, String>> getChartDataList(int code);
 
     CompletionEntity findCompletionEntityByName(String name, List<CompletionEntity> completionEntityList);
 
+    CompletionEntity findCompletionEntityByComCode(int code, List<CompletionEntity> completionEntityList);
+
     String getPredictDay(Date lastDate);
+
+
 }

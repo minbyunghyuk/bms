@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <title>SPS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,8 @@
     <link rel="stylesheet" href="assets/css/w3.css" type="text/css"/>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css " type="text/css"/>
     <link rel="stylesheet" href="assets/css/style.css " type="text/css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>--%>
+    <script src="assets/Library/http_cdnjs.cloudflare.com_ajax_libs_prefixfree_1.0.7_prefixfree.min.js"></script>
     <style>
         body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
@@ -30,4 +32,4 @@
         </div>
     </div>
 </header>
-<body>
+

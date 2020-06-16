@@ -65,6 +65,18 @@ public class StockServiceImpl implements StockSerivce {
      * 그래프화면에서 사용자가 선택한 주식명 한개
      */
     @Override
+    public CompletionEntity findCompletionEntityByComCode(int Com_code, List<CompletionEntity> completionEntityList) {
+
+        CompletionEntity seachItem = new CompletionEntity();
+        for (CompletionEntity item : completionEntityList) {
+            if (item.getCom_code()==Com_code) {
+                seachItem = item;
+                break;
+            }
+        }
+        return seachItem;
+    }
+    @Override
     public CompletionEntity findCompletionEntityByName(String name, List<CompletionEntity> completionEntityList) {
         String seachItemName = name;
         CompletionEntity seachItem = new CompletionEntity();
@@ -77,19 +89,16 @@ public class StockServiceImpl implements StockSerivce {
         return seachItem;
     }
 
-
     /**
      * 그래프항목에서 유사항목 리스트 생성
      */
     @Override
-    public List<CompletionEntity> getsimilarPlusList(String name) {
+    public List<CompletionEntity> getSimilarList(String name) {
 
-        String serachName = name;
         String similarItemName;
-
         List<CompletionEntity> similarPlusList = new ArrayList<>();
 
-        List<CorrEntity> corrEntityList = corrService.findAllByName(serachName);
+        List<CorrEntity> corrEntityList = corrService.findAllByName(name);
         List<CompletionEntity> CompletionEntityList = this.getFullList();
 
         for (CorrEntity corr : corrEntityList) {
@@ -101,7 +110,6 @@ public class StockServiceImpl implements StockSerivce {
                     similarPlusList.add(similarItem);
 
             }
-
         }
         similarPlusList.sort(new ListComparatorImpl());
         if (similarPlusList.size() >= 5) {
@@ -111,60 +119,31 @@ public class StockServiceImpl implements StockSerivce {
     }
 
 
-    @Override
-    public List<CompletionEntity> getsimilarMinusList(String name) {
-
-        String serachName = name;
-        String similarItemName;
-
-        List<CompletionEntity> similarMinusList = new ArrayList<>();
-
-        List<CorrEntity> corrEntityList = corrService.findAllByName(serachName);
-        List<CompletionEntity> CompletionEntityList = this.getFullList();
-
-        for (CorrEntity corr : corrEntityList) {
-
-            if (corr.getCor_value() < -0.7) {
-                similarItemName = corr.getValue();
-                //이름없을수도있음 예외처리
-                CompletionEntity similarItem = this.findCompletionEntityByName(similarItemName, CompletionEntityList);
-                if (!(similarItem.getCom_name() == null))
-                    similarMinusList.add(similarItem);
-            }
-
-        }
-        similarMinusList.sort(new ListComparatorImpl());
-        if (similarMinusList.size() >= 5) {
-
-            similarMinusList = similarMinusList.subList(0, 5);
-        }
-        return similarMinusList;
-    }
 
     /**
      * REST 방식(JSON)로 Return 할 Chart Data HashMap Collection 생성
      * startDate -> 조회시작날짜 2020-01-01 , endDate -> 마지막조회일 오늘날짜
      */
     @Override
-    public Collection<HashMap<String, String>> getChartDataList(String name) {
-        String stockName = name;
+    public Collection<HashMap<String, String>> getChartDataList(int code) {
+
 
         java.sql.Date startDate = java.sql.Date.valueOf("2019-12-31");
         Date endDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<StockEntity> stockEntityList = this.findAllByDateBetween(startDate, endDate);
 
-        //임시
+
         List<StockEntity> parseNameList = new ArrayList<>();
         Collection<HashMap<String, String>> jsonMap = new ArrayList<>();
 
 
-        //여기수정해야함 JPA -> Com_name , And between 변경필요 임시처리
         for (StockEntity stockEntity : stockEntityList) {
-            if (stockName.equals(stockEntity.getCom_name())) {
+            if (code==stockEntity.getCom_code()) {
                 parseNameList.add(stockEntity);
             }
         }
+
 
 
         //예측데이터 매칭필요로 i=1부터 시작한다.

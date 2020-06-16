@@ -14,8 +14,8 @@
     <div class="container">
         <div class="content">
             <div class="container2">
+                <h2>종목별 세부 예상 조회 </h2>
                 <table class="table table-striped custab">
-                    <h2>종목별 세부 예상 조회 </h2>
                     <thead>
                     <tr>
                         <th class="text-center">주식명</th>
@@ -112,16 +112,15 @@
                     <svg width="1200" height="400"></svg>
                 </div>
                 <h2>유사 성향 항목 </h2>
-                <c:if test="${fn:length(Pluslist)==0}">
-                <table class="table table-striped custab">
-                    <tr>
-                        <th class="text-center"> 유사 항목이 존재하지않습니다.</th>
-                    </tr>
-                    </c:if>
-                </table>
+                <c:if test="${fn:length(list)==0}">
+                    <table class="table table-striped custab">
+                        <tr>
+                            <th class="text-center"> 유사 항목이 없습니다.</th>
+                        </tr>
+                    </table>
+                </c:if>
 
-
-                <c:if test="${fn:length(Pluslist)!=0}">
+                <c:if test="${fn:length(list)!=0}">
                     <table class="table table-striped custab">
                         <thead>
                         <tr>
@@ -134,11 +133,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${Pluslist}" var="item">
+                        <c:forEach items="${list}" var="item">
                             <%--주식명--%>
                             <tr>
                                 <td style="cursor:pointer;" class="text-center text-primary" width="175"
-                                    onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
+                                    <%--                                    onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">--%>
+                                    onClick=" location.href='/get?code=<c:out value="${item.com_code}"/>'">
                                     <c:out value="${item.com_name}"/>
                                 </td>
                                     <%--금일종가
@@ -241,148 +241,18 @@
                         </tbody>
                     </table>
                 </c:if>
-
-                <h2> 반대 성향 종목 </h2>
-                <c:if test="${fn:length(Minuslist)==0}">
-                <table class="table table-striped custab">
-                    <tr>
-                        <th class="text-center"> 반대 성향 항목이 존재하지않습니다.</th>
-                    </tr>
-                    </c:if>
-                </table>
-                <c:if test="${fn:length(Minuslist)!=0}">
-                    <table class="table table-striped custab">
-                        <thead>
-                        <tr>
-                            <th class="text-center">주식명</th>
-                            <th class="text-center">금일종가</th>
-                            <th class="text-center">익일예측</th>
-                            <th class="text-center">등락적중률</th>
-                            <th class="text-center" title="최근 3개월 기준으로 투자를 진행한 경우">*최근3개월수익율</th>
-                            <th class="text-center">평균오차범위</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${Minuslist}" var="item">
-                            <%--주식명--%>
-                            <tr>
-                                <td style="cursor:pointer;" class="text-center text-primary" width="175"
-                                    onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
-                                    <c:out value="${item.com_name}"/>
-                                </td>
-                                    <%--금일종가
-                                    status 증가 , 감소 ,변화없음  3개  --%>
-                                <c:if test="${item.tod_status < 0}">
-                                    <td class="text-center" style="word-break:break-all" width="175">
-                                        <fmt:formatNumber value="${item.tod_price}"/> <span
-                                            class="triangle test_1"></span>
-                                    </td>
-                                </c:if>
-                                <c:if test="${item.tod_status > 0}">
-                                    <td class="text-center" style="word-break:break-all" width="175">
-                                        <fmt:formatNumber value="${item.tod_price}"/> <span
-                                            class="triangle test_2"> </span>
-                                    </td>
-                                </c:if>
-                                <c:if test="${item.tod_status == 0}">
-                                    <td class="text-center" style="word-break:break-all" width="175">
-                                        <fmt:formatNumber value="${item.tod_price}"/>
-                                    </td>
-                                </c:if>
-                                    <%--익일예측 --%>
-                                <c:if test="${item.tom_status < 0}">
-                                    <td class="text-center" style="word-break:break-all" width="175">
-                                        <c:out value="${item.tom_price}"/><span class="bh-font-12size">(<c:out
-                                            value="${item.next_day_return}"/>%)</span><span
-                                            class="triangle test_1"></span>
-                                    </td>
-                                </c:if>
-                                <c:if test="${item.tom_status > 0}">
-                                    <td class="text-center" style="word-break:break-all" width="175">
-                                        <fmt:formatNumber value="${item.tom_price}"/><span
-                                            class="bh-font-12size">(<c:out
-                                            value="${item.next_day_return}"/>%)</span><span
-                                            class="triangle test_2"> </span>
-                                    </td>
-                                </c:if>
-                                <c:if test="${item.tom_status == 0}">
-                                    <td class="text-center" style="word-break:break-all" width="175">
-                                        <fmt:formatNumber value="${item.tom_price}"/><span
-                                            class="bh-font-12size">(<c:out
-                                            value="${item.next_day_return}"/>%)</span>
-                                    </td>
-                                </c:if>
-                                    <%--등락적중률--%>
-                                <td class="text-center" style="word-break:break-all" width="210">
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"
-                                             style="width:<c:out value="${item.mean_match_status*100}"/>%;">
-                                            <fmt:formatNumber value="${item.mean_match_status*100}"/>%
-                                        </div>
-                                    </div>
-                                </td>
-                                    <%--최근한달수익율--%>
-                                <c:if test="${item.tod_return >= 1}">
-                                    <td class="text-center" style="word-break:break-all" width="210">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 style="width:<c:out value="${item.tod_return*40}"/>%;">
-                                                <fmt:formatNumber value="${item.tod_return*100-100}"/>%
-                                            </div>
-                                        </div>
-                                    </td>
-                                </c:if>
-                                <c:if test="${item.tod_return ==0}">
-                                    <td class="text-center" style="word-break:break-all" width="210">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="60"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 style="width:<c:out value="${item.tod_return*40}"/>%;">
-                                                <fmt:formatNumber value="${item.tod_return*100-100}"/>%
-                                            </div>
-                                        </div>
-                                    </td>
-                                </c:if>
-                                <c:if test="${item.tod_return < 1}">
-                                    <td class="text-center" style="word-break:break-all" width="210">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 style="width:<c:out value="${item.tod_return*40}"/>%;">
-                                                <fmt:formatNumber value="${item.tod_return*100-100}"/>%
-                                            </div>
-                                        </div>
-                                    </td>
-                                </c:if>
-                                    <%--오차율--%>
-                                <td class="text-center" style="word-break:break-all" width="193">
-                                    <fmt:formatNumber value="${item.mean_price_error}"/>%
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </c:if>
-
 
             </div>
-            <button type="button" class="btn btn-primary  pull-right" onclick="location.href='view'">전체 종가조회
+            <button type="button" class="btn btn-primary  pull-right" onclick="location.href='view'">전체 리스트보기
             </button>
         </div>
     </div>
 </div>
 
 <!-- load the d3.js library -->
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="assets/Library/http_d3js.org_d3.v4.js"></script>
+<script src="assets/Library/http_ajax.aspnetcdn.com_ajax_jQuery_jquery-3.3.1.js"></script>
 <script src="assets/js/d3.legend.js"></script>
-
 <script>
 
     var svg = d3.select("svg"),
@@ -405,7 +275,6 @@
 
 
     var valueline = d3.line()
-        .defined(d => !isNaN(d.Tod_price))
         .x(function (d) {
             return x(d.dateTod);
         })
@@ -427,163 +296,161 @@
     var g = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var name = '<c:out value="${model.com_name}"/>';
-    var url = "http://192.168.1.254:8080/rest/getJsonList?name=" + name;
+    var code = '<c:out value="${model.com_code}"/>';
+    var url = "http://192.168.1.254:8080/rest/getJsonList?code=" + code;
 
-        d3.json(url, function (error, data) {
+    d3.json(url, function (error, data) {
 
-            if (error) throw error;
-            data.forEach(function (d) {
-                d.dateTod = parseTime(d.date);
-                d.dateTom = parseTime(d.date);
-                if (isNaN(d.Tod_price))
-                    d.Tod_price = "없음";
-                else
-                    d.Tod_price = +d.Tod_price;
-
+        if (error) throw error;
+        data.forEach(function (d) {
+            d.dateTod = parseTime(d.date);
+            d.dateTom = parseTime(d.date);
+            if (isNaN(d.Tod_price))
+                d.Tod_price = "없음";
+            else
+                d.Tod_price = +d.Tod_price;
                 d.Tom_price = +d.Tom_price;
-                console.log(d.Tod_price);
-                //console.log(d.count+1);
-            });
-            x.domain(d3.extent(data, function (d) {
-                return d.dateTod;
-            }));
-
-            y.domain(
-                [d3.min(data, function (d) {
-                    return Math.min(d.Tod_price * 0.8);
-                }),
-                    d3.max(data, function (d) {
-                        return Math.max(d.Tod_price * 1.2);
-                    })
-                ]);
-
-            x1.domain(d3.extent(data, function (d) {
-                return d.dateTom;
-            }));
-            y1.domain(
-                [d3.min(data, function (d) {
-                    return Math.min(d.Tom_price * 0.8);
-                }),
-                    d3.max(data, function (d) {
-                        return Math.max(d.Tom_price * 1.2);
-                    })
-                ]);
-
-
-            g.append("g")
-                .attr("class", "axis axis--x")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x));
-
-            g.append("g")
-                .attr("class", "axis axis--y")
-                .call(d3.axisLeft(y).ticks(6).tickFormat(function (d) {
-                    return parseInt(d)
-                }))
-                .append("text")
-                .attr("class", "axis-title")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .attr("fill", "#5D6971");
-
-            g.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .style("stroke", "#ff7f0e")
-                .attr("d", valueline2);
-
-
-            g.append("path")
-                .datum(data)
-                .attr("class", "line")
-                .attr("d", valueline);
-
-
-            var serise = ["금일종가", "명일예측"];
-            var colors = d3.scaleOrdinal(d3.schemeCategory10);
-            var legend = svg.append("g")
-                .attr("text-anchor", "end")
-                .selectAll("g")
-                .data(serise)
-                .enter().append("g")
-                .attr("transform", function (d, i) {
-                    return "translate(0," + i * 20 + ")";
-                });
-
-            legend.append("rect")
-                .attr("x", width + 50)
-                .attr("y", 330)
-                .attr("width", 19)
-                .attr("height", 19)
-                .attr("fill", colors);
-
-            legend.append("text")
-                .attr("x", width + 130)
-                .attr("y", 340)
-                .attr("dy", "0.32em")
-                .text(function (d) {
-                    return d;
-                });
-            var focus = g.append("g")
-                .attr("class", "focus")
-                .style("display", "none");
-
-            focus.append("line")
-                .attr("class", "x-hover-line hover-line")
-                .attr("y", 0)
-                .attr("y", height);
-
-            focus.append("circle")
-                .attr("r", 3.5)
-                .style("fill", "none")
-                .style("stroke", "blue")
-                .attr("r", 3);
-
-            focus.append("text")
-                .attr("x", 2)
-                .attr("dy", ".10em");
-
-
-            svg.append("rect")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-                .attr("class", "overlay")
-                .attr("width", width)
-                .attr("height", height)
-                .on("mouseover", function () {
-                    focus.style("display", null);
-                })
-                .on("mouseout", function () {
-                    focus.style("display", "none");
-                })
-                .on("mousemove", mousemove);
-
-
-            function mousemove() {
-                var x0 = x.invert(d3.mouse(this)[0]),
-                    i = bisectDate(data, x0, 1),
-                    d0 = data[i - 1],
-                    d1 = data[i],
-                    d = x0 - d0.dateTom > d1.dateTom - x0 ? d1 : d0;
-                focus.attr("transform", "translate(" + x(d.dateTom) + "," + y(d.Tom_price) + ")");
-                focus.select("text")
-                    .style("font-size", "14px")
-                    .text("날짜: " + parseDate(d.dateTom))
-                    .append("tspan")
-                    .attr("x", 5)
-                    .attr("dy", "1em")
-                    .text("금일종가: " + d.Tod_price)
-                    .append("tspan")
-                    .attr("x", 5)
-                    .attr("dy", "1em")
-                    .text("명일예측: " + d.Tom_price);
-                focus.select(".x-hover-line").attr("y1", height - y(d.Tom_price));
-                focus.select(".y-hover-line").attr("x1", width + width);
-
-            }
 
         });
+        x.domain(d3.extent(data, function (d) {
+            return d.dateTod;
+        }));
+
+        y.domain(
+            [d3.min(data, function (d) {
+                return Math.min(d.Tod_price * 0.8);
+            }),
+                d3.max(data, function (d) {
+                    return Math.max(d.Tod_price * 1.2);
+                })
+            ]);
+
+        x1.domain(d3.extent(data, function (d) {
+            return d.dateTom;
+        }));
+        y1.domain(
+            [d3.min(data, function (d) {
+                return Math.min(d.Tom_price * 0.8);
+            }),
+                d3.max(data, function (d) {
+                    return Math.max(d.Tom_price * 1.2);
+                })
+            ]);
+
+
+        g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        g.append("g")
+            .attr("class", "axis axis--y")
+            .call(d3.axisLeft(y).ticks(6).tickFormat(function (d) {
+                return parseInt(d)
+            }))
+            .append("text")
+            .attr("class", "axis-title")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .attr("fill", "#5D6971");
+
+        g.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .style("stroke", "#ff7f0e")
+            .attr("d", valueline2);
+
+
+        g.append("path")
+            .datum(data)
+            .attr("class", "line")
+            .attr("d", valueline);
+
+
+        var serise = ["금일종가", "명일예측"];
+        var colors = d3.scaleOrdinal(d3.schemeCategory10);
+        var legend = svg.append("g")
+            .attr("text-anchor", "end")
+            .selectAll("g")
+            .data(serise)
+            .enter().append("g")
+            .attr("transform", function (d, i) {
+                return "translate(0," + i * 20 + ")";
+            });
+
+        legend.append("rect")
+            .attr("x", width + 50)
+            .attr("y", 330)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", colors);
+
+        legend.append("text")
+            .attr("x", width + 130)
+            .attr("y", 340)
+            .attr("dy", "0.32em")
+            .text(function (d) {
+                return d;
+            });
+        var focus = g.append("g")
+            .attr("class", "focus")
+            .style("display", "none");
+
+        focus.append("line")
+            .attr("class", "x-hover-line hover-line")
+            .attr("y", 0)
+            .attr("y", height);
+
+        focus.append("circle")
+            .attr("r", 3.5)
+            .style("fill", "none")
+            .style("stroke", "blue")
+            .attr("r", 3);
+
+        focus.append("text")
+            .attr("x", 2)
+            .attr("dy", ".10em");
+
+
+        svg.append("rect")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .attr("class", "overlay")
+            .attr("width", width)
+            .attr("height", height)
+            .on("mouseover", function () {
+                focus.style("display", null);
+            })
+            .on("mouseout", function () {
+                focus.style("display", "none");
+            })
+            .on("mousemove", mousemove);
+
+
+        function mousemove() {
+            var x0 = x.invert(d3.mouse(this)[0]),
+                i = bisectDate(data, x0, 1),
+                d0 = data[i - 1],
+                d1 = data[i],
+                d = x0 - d0.dateTom > d1.dateTom - x0 ? d1 : d0;
+            focus.attr("transform", "translate(" + x(d.dateTom) + "," + y(d.Tom_price) + ")");
+            focus.select("text")
+                .style("font-size", "14px")
+                .text("날짜: " + parseDate(d.dateTom))
+                .append("tspan")
+                .attr("x", 5)
+                .attr("dy", "1em")
+                .text("금일종가: " + d.Tod_price)
+                .append("tspan")
+                .attr("x", 5)
+                .attr("dy", "1em")
+                .text("명일예측: " + d.Tom_price);
+            focus.select(".x-hover-line").attr("y1", height - y(d.Tom_price));
+            focus.select(".y-hover-line").attr("x1", width + width);
+
+        }
+
+    });
 
 </script>

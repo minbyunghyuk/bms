@@ -5,9 +5,9 @@
 <%@ include file="../includes/header.jsp" %>
 
 
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="assets/Library/http_ajax.aspnetcdn.com_ajax_jQuery_jquery-3.3.1.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/Library/http_cdn.datatables.net_1.10.21_css_jquery.dataTables.css">
+
 
 <div class="row">
     <div class="container">
@@ -31,7 +31,8 @@
                         <%--주식명--%>
                         <tr>
                             <td style="cursor:pointer;" class="text-center text-primary" width="165"
-                                onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
+<%--                                onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">--%>
+                                onClick=" location.href='/get?code=<c:out value="${item.com_code}"/>'">
                                 <c:out value="${item.com_name}"/>
                             </td>
                                 <%--금일종가
@@ -138,7 +139,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<%--<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>--%>
+<script type="text/javascript" src="assets/Library/http_cdn.datatables.net_1.10.19_js_jquery.dataTables.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#stock').DataTable();

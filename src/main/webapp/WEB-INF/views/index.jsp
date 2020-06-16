@@ -19,8 +19,8 @@
 
             <h2> 차별화된 주가 예측 시스템</h2>
 
-            <P class="text-center">기존의 주가예측보다 주식별 상관성을 더한 예측으로 약10% 향상된 예측율</P>
-            <P class="text-center"> (예상 수익률 10% 정확도 80%)</P>
+            <P class="text-center">기존의 주가예측보다 주식별 상관성을 더한 예측으로 약 10% 향상된 예측율</P>
+            <P class="text-center"> (예상 수익률 40% 정확도 60%)</P>
             <div class="button">
                 <input type="button" class="btn btn-primary" value="View Developer Process"
                        onclick="location.href='devpro'"/><br/>
@@ -41,7 +41,8 @@
                     <tbody>
                     <tr>
                         <td style="cursor:pointer;" class="text-center text-primary" width="165"
-                            onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">
+<%--                            onClick=" location.href='/get?name=<c:out value="${item.com_name}"/>'">--%>
+                            onClick=" location.href='/get?code=<c:out value="${item.com_code}"/>'">
                             <c:out value="${item.com_name}"/>
                         </td>
                             <%--r종가--%>
@@ -128,5 +129,4 @@
             </button>
         </div>
     </div>
-
 </div>
