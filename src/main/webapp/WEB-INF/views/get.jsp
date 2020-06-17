@@ -297,7 +297,7 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var code = '<c:out value="${model.com_code}"/>';
-    var url = "http://192.168.1.254:8080/rest/getJsonList?code=" + code;
+    var url = "http://192.168.1.254:80/rest/getJsonList?code=" + code;
 
     d3.json(url, function (error, data) {
 
